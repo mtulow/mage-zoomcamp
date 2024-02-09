@@ -24,7 +24,6 @@ def transform(data: pd.DataFrame, *args, **kwargs):
     """
     # Specify your transformation logic here
     
-    # Rename
     # Create a function to convert camel case string to snake case 
     def camel_to_snake(text: str) -> str:
         """
@@ -67,6 +66,8 @@ def test_output(output: pd.DataFrame, *args) -> None:
     # `vendor_id` is one of the existing values in the column (currently)
     assert 'vendor_id' in list(output.columns), f'`vendor_id` not in columns'
     # `passenger_count` is greater than 0
-    assert (output.passenger_count == 0).sum() == 0, f''
+    zero_passengers = (output.passenger_count == 0).sum()
+    assert zero_passengers == 0, f'{zero_passengers} taxi trips in dataframe with zero passengers.'
     # `trip_distance` is greater than 0
-    assert (output.trip_distance == 0).sum() == 0, f''
+    zero_distance = (output.trip_distance == 0).sum()
+    assert zero_distance == 0, f'{zero_distance} taxi trips in dataframe with zero passengers.'
