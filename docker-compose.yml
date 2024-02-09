@@ -1,6 +1,8 @@
 version: '3'
 services:
+  
   magic:
+    container_name: ${PROJECT_NAME}-mage
     image: mageai/mageai:latest
     command: mage start ${PROJECT_NAME}
     env_file:
@@ -22,6 +24,7 @@ services:
       - .:/home/src/
       - ~/Documents/secrets/personal-gcp.json:/home/src/personal-gcp.json
     restart: on-failure:5
+  
   postgres:
     image: postgres:14
     restart: on-failure
