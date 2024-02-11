@@ -24,7 +24,6 @@ def transform(data: pd.DataFrame, *args, **kwargs):
     """
     # Specify your transformation logic here
     
-    # Rename
     # Create a function to convert camel case string to snake case 
     def camel_to_snake(text: str) -> str:
         """
@@ -44,16 +43,28 @@ def transform(data: pd.DataFrame, *args, **kwargs):
     data = data[data['trip_distance'] > 0]
 
     # Create a new column lpep_pickup_date by converting lpep_pickup_datetime to a date.
+    if 'yellow' == kwargs['taxi_service']:
+        prefix = 'tpep'
+    elif 'green' == kwargs['taxi_service']:
+        prefix = 'lpep'
+    else:
+        raise ValueError
     data.insert(
-        list(data.columns).index('lpep_pickup_datetime'),
-        'lpep_pickup_date',
-        data.lpep_pickup_datetime.dt.date,
+        list(data.columns).index(prefix+'_pickup_datetime'),
+        prefix+'_pickup_date',
+        data[prefix+'_pickup_datetime'].dt.date,
     )
     data.insert(
-        list(data.columns).index('lpep_dropoff_datetime'),
-        'lpep_dropoff_date',
-        data.lpep_dropoff_datetime.dt.date,
+        list(data.columns).index(prefix+'_dropoff_datetime'),
+        prefix+'_dropoff_date',
+        data[prefix+'_dropoff_datetime'].dt.date,
     )
+    data.rename(columns={
+        prefix+'_pickup_date': 'pickup_date',
+        prefix+'_pickup_datetime': 'pickup_datetime',
+        prefix+'_dropoff_date': 'dropoff_date',
+        prefix+'_dropoff_datetime': 'dropoff_datetime',
+    }, inplace=True)
     
     return data
 

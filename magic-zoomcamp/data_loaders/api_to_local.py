@@ -18,15 +18,15 @@ def load_data_from_api(*args, **kwargs):
 
     service = kwargs['taxi_service']
     year = kwargs['year']
-    if 'months' in kwargs:
-        months = kwargs.get('months')
-        return pd.concat([fetch_data(service,year,month) for month in months])
-    elif 'month' in kwargs:
+    if 'month' in kwargs:
         month = kwargs['month']
         return fetch_data(service,year,month)
-    else:
-        months = range(1,12+1)
+    elif 'months' in kwargs:
+        months = kwargs.get('months', range(1,12+1))
         return pd.concat([fetch_data(service,year,month) for month in months])
+    else:
+        raise ValueError
+        
 
 @test
 def test_output(output, *args) -> None:
