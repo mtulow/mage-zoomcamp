@@ -9,7 +9,7 @@ if 'data_exporter' not in globals():
 
 
 @data_exporter
-def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
+def export_data(df: DataFrame, **kwargs) -> None:
     """
     Template for exporting data to a Google Cloud Storage bucket.
     Specify your configuration settings in 'io_config.yaml'.
@@ -20,10 +20,10 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     year = kwargs['year']
     if 'months' in kwargs:
         months = kwargs.get('months', range(1,12+1))
-        file_name = f'{service}_tripdata_{year}-{min(months):02d}-{max(months):02d}.parquet'
+        file_name = f'{service}_tripdata_{year}_{min(months):02d}-{max(months):02d}.parquet'
     elif 'month' in kwargs:
         month = kwargs['month']
-        file_name = f'{service}_tripdata_{year}-{month:02d}.parquet'
+        file_name = f'{service}_tripdata_{year}_{month:02d}.parquet'
     else:
         raise ValueError
 
@@ -31,6 +31,7 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     config_profile = 'default'
 
     bucket_name = 'nyc-tlc_taxi-trip'
+    object_key = file_name
     
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
         df,

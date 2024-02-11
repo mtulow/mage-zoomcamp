@@ -17,6 +17,7 @@ bucket_name = 'nyc-tlc_taxi-trip'
 def export_data(df: pd.DataFrame, **kwargs) -> None:
     # 
     service = kwargs['taxi_service']
+    year = kwargs['year']
     # 
     table_name = f'{service}_taxi'
     root_path = f'{bucket_name}/{table_name}'

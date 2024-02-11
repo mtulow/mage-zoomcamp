@@ -37,3 +37,17 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"
+
+  pgadmin:
+    container_name: ${PROJECT_NAME}-pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8080:80"

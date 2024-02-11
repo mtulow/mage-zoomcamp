@@ -1,0 +1,14 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-02-11 03:09:54.804400
+  name: quick run
+  pipeline_uuid: nyc_taxi_elt
+  schedule_interval: '@once'
+  schedule_type: time
+  settings: null
+  sla: null
+  start_time: 2024-02-10 03:09:00
+  status: active
+  variables:
+    taxi_service: green
+    year: 2022
