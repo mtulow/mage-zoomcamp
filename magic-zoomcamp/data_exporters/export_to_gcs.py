@@ -25,12 +25,12 @@ def export_data(df: DataFrame, **kwargs) -> None:
         month = kwargs['month']
         file_name = f'{service}_tripdata_{year}_{month:02d}.parquet'
     else:
-        raise ValueError
+        file_name = f'{service}_tripdata_{year}_01-12.parquet'
 
     config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
+    config_profile = 'dev'
 
-    bucket_name = 'nyc-tlc_taxi-trip'
+    bucket_name = 'nyc-tlc-trips'
     object_key = file_name
     
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(

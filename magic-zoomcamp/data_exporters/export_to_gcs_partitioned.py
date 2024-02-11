@@ -10,7 +10,7 @@ if 'data_exporter' not in globals():
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/src/mage-sa.json'
 
 project_id = 'dtc-de-mst-zoomcamp-2024'
-bucket_name = 'nyc-tlc_taxi-trip'
+bucket_name = 'nyc-tlc-trips'
 
 
 @data_exporter
